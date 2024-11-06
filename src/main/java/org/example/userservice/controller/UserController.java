@@ -35,7 +35,7 @@ public class UserController {
         return userService.logout(tokenValue);
     }
 
-    @GetMapping("/validateToken")
+    @PostMapping ("/validateToken")
     public ResponseEntity<UserDto> validateToken(@RequestBody ValidateTokenRequestDto validateTokenRequestDto) throws  Exception{
         String tokenValue = validateTokenRequestDto.getToken();
         return userService.validateToken(tokenValue);

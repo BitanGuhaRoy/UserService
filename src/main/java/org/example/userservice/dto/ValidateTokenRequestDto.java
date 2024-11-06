@@ -1,13 +1,10 @@
 package org.example.userservice.dto;
 
-public class ValidateTokenRequestDto {
+import lombok.Getter;
+import lombok.Setter;
+@Setter
+@Getter
+public class ValidateTokenRequestDto
+{
     private String token;
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }
