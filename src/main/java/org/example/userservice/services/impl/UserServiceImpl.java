@@ -2,6 +2,7 @@ package org.example.userservice.services.impl;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.example.userservice.dto.*;
+import org.example.userservice.exception.InvalidTokenException;
 import org.example.userservice.exception.UserDoesnotExistsException;
 import org.example.userservice.model.Token;
 import org.example.userservice.model.User;
@@ -68,7 +69,6 @@ public class UserServiceImpl implements UserService {
         if(user.isEmpty())
         {
             logInResponseDto.setMessage("User not found");
-//            throw new InvalidPasswordException();
             throw new UserDoesnotExistsException("User not found");
 
         }
@@ -110,5 +110,21 @@ public class UserServiceImpl implements UserService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<UserDto> validateToken(String tokenValue) throws InvalidTokenException {
+        Optional<Token> optionalToken = tokenRepository.findByTokenValue(tokenValue);
+        if(optionalToken.isPresent()){
+            Token token = optionalToken.get();
+
+            if (token.getIsDeleted()) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            User user = token.getUser();
+            UserDto userDto = UserDto.getUserDto(user);
+            return new ResponseEntity<>(userDto, HttpStatus.OK);
+        }
+        else {
+            throw new InvalidTokenException("Invalid token");
+        }
+//            return null;
     }
 }

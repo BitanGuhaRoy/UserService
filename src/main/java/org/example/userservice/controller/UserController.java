@@ -2,13 +2,11 @@ package org.example.userservice.controller;
 
 import org.example.userservice.dto.*;
 import org.example.userservice.model.Token;
+import org.example.userservice.model.User;
 import org.example.userservice.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -35,6 +33,12 @@ public class UserController {
 //        Token token = logOutRequestDto.getToken();
         String tokenValue= logOutRequestDto.getTokenValue();
         return userService.logout(tokenValue);
+    }
+
+    @GetMapping("/validateToken")
+    public ResponseEntity<UserDto> validateToken(@RequestBody ValidateTokenRequestDto validateTokenRequestDto) throws  Exception{
+        String tokenValue = validateTokenRequestDto.getToken();
+        return userService.validateToken(tokenValue);
     }
 
 }

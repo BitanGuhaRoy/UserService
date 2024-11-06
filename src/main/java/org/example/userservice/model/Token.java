@@ -1,9 +1,6 @@
 package org.example.userservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.userservice.dto.TokenResponseDto;
@@ -16,8 +13,10 @@ import java.util.Date;
 public class Token extends BaseModel{
     @ManyToOne
     private User user;
+
     private String tokenValue;
     private Date expiryDate;
+
     public static TokenResponseDto tokenDto(Token token){
 
         TokenResponseDto tokenResponseDto = new TokenResponseDto();
