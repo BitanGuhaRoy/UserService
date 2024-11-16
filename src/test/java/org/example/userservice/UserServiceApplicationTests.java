@@ -29,7 +29,7 @@ class UserServiceApplicationTests {
     {
         RegisteredClient oidcClient = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId("oidc-client")
-                .clientSecret("{noop}secret") // store encrypted "secret"
+                .clientSecret("$2a$12$qgOEP19gfVS925YRar.xeuuB7mN8ZjPExtsDuPbFeqd/f7kT44JuK") // store encrypted "secret"
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
@@ -38,6 +38,7 @@ class UserServiceApplicationTests {
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
                 .scope("ADMIN")
+                .scope("USER")
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
                 .build();
         registeredClientRepository.save(oidcClient);
